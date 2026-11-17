@@ -5,7 +5,7 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-// cek cookie di sini, jika ada riwayat user sebelumnya
+//cek cookie, kalo user pilih
 $saved_user = isset($_COOKIE['ingat_user']) ? $_COOKIE['ingat_user'] : '';
 ?>
 
@@ -33,7 +33,7 @@ $saved_user = isset($_COOKIE['ingat_user']) ? $_COOKIE['ingat_user'] : '';
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" name="remember" class="form-check-input" id="remember">
-                    <label class="form-check-label" for="remember">Ingat Username Saya (Cookie)</label>
+                    <label class="form-check-label" for="remember">Ingat Username Saya</label>
                 </div>
                 <button type="submit" class="btn btn-warning w-100 fw-bold">Masuk</button>
             </form>
