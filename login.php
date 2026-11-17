@@ -1,12 +1,12 @@
 <?php
-session_start();
-if (isset($_SESSION['user_id'])) {
-    header("Location: dashboardUser.php");
-    exit;
-}
-
-//cek cookie, kalo user pilih
-$saved_user = isset($_COOKIE['ingat_user']) ? $_COOKIE['ingat_user'] : '';
+    session_start();
+    if (isset($_SESSION['user_id'])) {
+        header("Location: dashboardUser.php");
+        exit;
+    }
+    
+    //cek cookie, kalo user pilih
+    $saved_user = isset($_COOKIE['ingat_user']) ? $_COOKIE['ingat_user'] : '';
 ?>
 
 <!DOCTYPE html>
