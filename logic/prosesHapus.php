@@ -5,7 +5,7 @@
 
     if (!isset($_SESSION['status_login']) || $_SESSION['status_login'] !== true) {
         header("Location: ../login.php");
-        exit();
+        exit;
     }
 
     $id      = (int) $_GET['id'];
@@ -21,7 +21,7 @@
 
     if (!$data) {
         header("Location: ../dashboardUser.php");
-        exit();
+        exit;
     }
 
     $stmt = $koneksi->prepare("DELETE FROM items WHERE id = ? AND user_id = ?");
@@ -34,7 +34,7 @@
             unlink($path);
         }
         header("Location: ../dashboardUser.php");
-        exit();
+        exit;
     } else {
         echo "Proses hapus gagal! " . $koneksi->error;
     }

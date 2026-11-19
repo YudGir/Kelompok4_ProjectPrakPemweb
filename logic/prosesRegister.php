@@ -4,7 +4,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header("Location: ../register.php");
-        exit();
+        exit;
     }
 
     $username      = trim($_POST['username']);
@@ -12,7 +12,7 @@
 
     if ($username === "" || $password_asli === "") {
         echo "<script>alert('Username dan password tidak boleh kosong!'); window.location='../register.php';</script>";
-        exit();
+        exit;
     }
 
     // cek apakah username sudah dipakai
@@ -23,7 +23,7 @@
 
     if ($cek->num_rows > 0) {
         echo "<script>alert('Username sudah dipakai, pilih yang lain!'); window.location='../register.php';</script>";
-        exit();
+        exit;
     }
     $cek->close();
 

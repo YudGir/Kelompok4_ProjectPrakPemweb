@@ -3,7 +3,7 @@ session_start();
 
 if (!isset($_SESSION["status_login"]) || $_SESSION["status_login"] !== true) {
     header("Location: login.php");
-    exit();
+    exit;
 }
 ?>
 
@@ -13,7 +13,7 @@ if (!isset($_SESSION["status_login"]) || $_SESSION["status_login"] !== true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Item Baru - LootSwap</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 

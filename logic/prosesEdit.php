@@ -5,12 +5,12 @@
 
     if (!isset($_SESSION['status_login']) || $_SESSION['status_login'] !== true) {
         header("Location: ../login.php");
-        exit();
+        exit;
     }
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header("Location: ../dashboardUser.php");
-        exit();
+        exit;
     }
 
     $id          = (int) $_POST['id'];
@@ -25,7 +25,7 @@
 
     if ($stmt->execute()) {
         header("Location: ../dashboardUser.php");
-        exit();
+        exit;
     } else {
         echo "Gagal memperbarui data: " . $koneksi->error;
     }

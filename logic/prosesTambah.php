@@ -5,12 +5,12 @@
 
     if (!isset($_SESSION['status_login']) || $_SESSION['status_login'] !== true) {
         header("Location: ../login.php");
-        exit();
+        exit;
     }
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header("Location: ../dashboardUser.php");
-        exit();
+        exit;
     }
 
     $user_id     = (int) $_SESSION['user_id'];
@@ -28,19 +28,19 @@
 
         if (!in_array($ekstensi, $ekstensi_boleh) || getimagesize($tmp_file) === false) {
             echo "<script>alert('File harus berupa gambar (jpg, png, gif, webp)!'); window.history.back();</script>";
-            exit();
+            exit;
         }
 
         if ($_FILES['gambar']['size'] > 2 * 1024 * 1024) {
             echo "<script>alert('Ukuran gambar maksimal 2 MB!'); window.history.back();</script>";
-            exit();
+            exit;
         }
 
         $nama_file = uniqid() . "." . $ekstensi;
 
         if (!move_uploaded_file($tmp_file, "../uploads/" . $nama_file)) {
             echo "<script>alert('Gagal mengunggah gambar!'); window.history.back();</script>";
-            exit();
+            exit;
         }
     }
 
@@ -49,7 +49,7 @@
 
     if ($stmt->execute()) {
         header("Location: ../dashboardUser.php");
-        exit();
+        exit;
     } else {
         echo "Gagal menyimpan data: " . $koneksi->error;
     }

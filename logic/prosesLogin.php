@@ -5,7 +5,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header("Location: ../login.php");
-        exit();
+        exit;
     }
 
     $username = $_POST['username'];
@@ -31,7 +31,7 @@
         }
 
         header("Location: ../dashboardUser.php");
-        exit();
+        exit;
     } else {
         echo "<script>alert('Username atau Password salah!'); window.location='../login.php';</script>";
     }
