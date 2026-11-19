@@ -1,11 +1,11 @@
 <?php
     session_start();
-    if (isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['status_login']) && $_SESSION['status_login'] === true) {
         header("Location: dashboardUser.php");
         exit;
     }
 
-    $saved_user = isset($_COOKIE['ingat_user']) ? $_COOKIE['ingat_user'] : '';
+    $saved_user = isset($_COOKIE['ingat_user']) ? htmlspecialchars($_COOKIE['ingat_user']) : '';
 ?>
 
 <!DOCTYPE html>

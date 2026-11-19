@@ -2,10 +2,16 @@
     session_start();
     include 'config/koneksi.php';
 
-    $query = "SELECT items.*, users.username FROM items 
-            JOIN users ON items.user_id = users.id 
-            ORDER BY items.id DESC";
+    function e($teks) {
+        return htmlspecialchars($teks, ENT_QUOTES, 'UTF-8');
+    }
+
+    $query = "SELECT items.*, users.username FROM items
+              JOIN users ON items.user_id = users.id
+              ORDER BY items.id DESC";
     $result = mysqli_query($koneksi, $query);
+
+    $sudah_login = isset($_SESSION['status_login']) && $_SESSION['status_login'] === true;
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +30,7 @@
             LootSwap
         </a>
         <div class="d-flex gap-2">
-            <?php if (isset($_SESSION['user_id'])): ?>
+            <?php if ($sudah_login): ?>
                 <a href="dashboardUser.php" class="btn btn-outline-warning btn-sm px-3">Dashboard</a>
                 <a href="logic/prosesLogout.php" class="btn btn-danger btn-sm px-3">Logout</a>
             <?php else: ?>
@@ -58,8 +64,8 @@
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
             <div class="col-md-4 item-card">
                 <div class="card h-100 bg-body-tertiary border-secondary shadow">
-                    <img src="uploads/<?= $row['gambar']; ?>" class="card-img-top border-bottom border-secondary" style="height: 210px; object-fit: cover;" alt="Gambar Item">
-                    
+                    <img src="uploads/<?= e($row['gambar']); ?>" class="card-img-top border-bottom border-secondary" style="height: 210px; object-fit: cover;" alt="Gambar Item">
+
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <?php if ($row['status'] == 'Tersedia'): ?>
@@ -67,19 +73,22 @@
                             <?php else: ?>
                                 <span class="badge bg-secondary">Sudah Ditukar</span>
                             <?php endif; ?>
+                            <span class="badge bg-dark border border-secondary"><?= e($row['nama_game']); ?></span>
                         </div>
 
-                        <h5 class="card-title fw-bold text-warning mt-2"><?= $row['nama_item']; ?></h5>
+                        <h5 class="card-title fw-bold text-warning mt-2"><?= e($row['nama_item']); ?></h5>
                         <p class="card-text small mb-2">
-                            <span class="text-secondary">Dicari:</span> <strong class="text-light"><?= $row['item_dicari']; ?></strong>
+                            <span class="text-secondary">Dicari:</span> <strong class="text-light"><?= e($row['item_dicari']); ?></strong>
                         </p>
                         <p class="card-text text-secondary small mb-0">
-                            Pemilik: @<?= $row['username']; ?>
+                            Pemilik: @<?= e($row['username']); ?>
                         </p>
                     </div>
                     <div class="card-footer bg-transparent border-top border-secondary pt-3 pb-3">
                         <?php if ($row['status'] == 'Tersedia'): ?>
-                            <button onclick="infoKontak('<?= $row['nama_item']; ?>', '<?= $row['kontak']; ?>')" class="btn btn-warning w-100 fw-bold">
+                            <button class="btn btn-warning w-100 fw-bold btn-barter"
+                                    data-item="<?= e($row['nama_item']); ?>"
+                                    data-kontak="<?= e($row['kontak']); ?>">
                                 Ajukan Barter
                             </button>
                         <?php else: ?>
@@ -100,16 +109,23 @@
     function cariItem() {
         let input = document.getElementById('searchInput').value.toLowerCase();
         let cards = document.getElementsByClassName('item-card');
-    
+
         for (let i = 0; i < cards.length; i++) {
             let isiCard = cards[i].innerText.toLowerCase();
             cards[i].style.display = isiCard.includes(input) ? "" : "none";
         }
     }
-    
+
     function infoKontak(namaItem, kontak) {
-        alert("Tertarik menukar '" + namaItem + "'?\n\nSilakan hubungi pemilik item melalui:\n " + kontak);
+        alert("Tertarik menukar '" + namaItem + "'?\n\nSilakan hubungi pemilik item melalui:\n" + kontak);
     }
+
+    const tombolBarter = document.querySelectorAll('.btn-barter');
+    tombolBarter.forEach(function (tombol) {
+        tombol.addEventListener('click', function () {
+            infoKontak(tombol.dataset.item, tombol.dataset.kontak);
+        });
+    });
 </script>
 
 </body>
